@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+
+<beans>
+    <!-- Registration of new models -->
+    <bean id="org_alfresco_module_alfrescosearchdemo_dictionaryBootstrap" parent="dictionaryModelBootstrap" depends-on="dictionaryBootstrap">
+        <property name="models">
+            <list>
+                <value>alfresco/module/com.ixonos.alfresco.module.searchdemo/model/alfrescosearchdemoModel.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="org_alfresco_module_alfrescosearchdemo_ConfigBootstrap" class="org.alfresco.web.config.WebClientConfigBootstrap" init-method="init">
+       <property name="configs">
+         <list>
+            <value>classpath:alfresco/module/com.ixonos.alfresco.module.searchdemo/ui/web-client-config-custom.xml</value>
+         </list>
+       </property>
+    </bean>
+	
+</beans>

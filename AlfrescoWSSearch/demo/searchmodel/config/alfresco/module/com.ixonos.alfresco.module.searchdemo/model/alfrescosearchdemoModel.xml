@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="asd::alfrescosearchdemo" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+	<description>Alfresco demo content model</description>
+    <author>Marko Asplund</author>
+    <version>0.6</version>
+
+    <imports>
+    	<import uri="http://www.alfresco.org/model/system/1.0" prefix="sys"/>
+    	<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d"/>
+    	<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm"/>
+	</imports>
+	
+	<namespaces>
+		<namespace uri="http://www.ixonos.com/model/alfrescosearchdemo/1.0" prefix="asd"/>
+    </namespaces>
+
+    <types>
+    	<type name="asd:document">
+			<title>Document</title>
+			<parent>cm:content</parent>
+		</type>
+		
+		<type name="asd:motorVehicle">
+			<title>motor vehicle</title>
+			<parent>asd:document</parent>
+			<mandatory-aspects>
+				<aspect>asd:motorVehicleProperties</aspect>
+			</mandatory-aspects>
+		</type>
+		
+		<type name="asd:car">
+			<title>car</title>
+			<parent>asd:motorVehicle</parent>
+			<mandatory-aspects>
+				<aspect>asd:carProperties</aspect>
+			</mandatory-aspects>
+		</type>
+		
+		<type name="asd:motorcycle">
+			<title>motorcycle</title>
+			<parent>asd:motorVehicle</parent>
+			<mandatory-aspects>
+				<aspect>asd:motorcycleProperties</aspect>
+			</mandatory-aspects>
+		</type>
+		
+	</types>
+
+    <aspects>
+
+    	 <aspect name="asd:motorVehicleProperties">
+    	 	<title>motor vehicle properties</title>
+    	 	<properties>
+    	 		<property name="asd:vehicleManufacturer">
+    	 			<type>d:text</type>
+    	 		</property>	
+    	 		<property name="asd:vehicleModel">
+    	 			<type>d:text</type>
+    	 		</property>	
+    	 		<property name="asd:vehicleRegistrationNumber">
+    	 			<type>d:text</type>
+    	 			<mandatory>true</mandatory>
+    	 		</property>	
+    	 	</properties>
+    	 </aspect>
+    	 
+    	 <aspect name="asd:carProperties">
+    	 	<title>car properties</title>
+    	 	<properties>
+    	 		<property name="asd:carDoors">
+    	 			<type>d:int</type>
+    	 		</property>
+    	 	</properties>
+    	 </aspect>
+
+    	 <aspect name="asd:motorcycleProperties">
+    	 	<title>motorcycle properties</title>
+    	 	<properties>
+    	 		<property name="asd:motorcycleHasSideCar">
+    	 			<type>d:boolean</type>
+    	 			<default>false</default>
+    	 		</property>
+    	 	</properties>
+    	 </aspect>
+
+    </aspects>
+ 
+</model>

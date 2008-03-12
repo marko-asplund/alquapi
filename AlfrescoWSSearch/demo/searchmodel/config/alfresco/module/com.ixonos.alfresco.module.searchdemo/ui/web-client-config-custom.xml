@@ -1,0 +1,60 @@
+<alfresco-config>
+
+	<config evaluator="aspect-name" condition="asd:motorVehicleProperties">
+		<property-sheet>
+			<show-property name="asd:vehicleManufacturer"/>
+            <show-property name="asd:vehicleModel"/>
+            <show-property name="asd:vehicleRegistrationNumber"/>
+        </property-sheet>
+	</config>
+	
+	<config evaluator="aspect-name" condition="asd:carProperties">
+		<property-sheet>
+			<show-property name="asd:carDoors"/>
+        </property-sheet>
+	</config>
+
+	<config evaluator="aspect-name" condition="asd:motorcycleProperties">
+		<property-sheet>
+			<show-property name="asd:motorcycleHasSideCar"/>
+        </property-sheet>
+	</config>
+
+	<config evaluator="string-compare" condition="Content Wizards">
+		<content-types>
+			<type name="asd:car"/>
+			<type name="asd:motorcycle"/>
+        </content-types>
+    </config>
+    
+    <config evaluator="string-compare" condition="Action Wizards">
+    	<aspects>
+    	</aspects>
+    	<subtypes>
+			<type name="asd:motorVehicle"/>
+			<type name="asd:car"/>
+			<type name="asd:motorcycle"/>
+    	</subtypes>
+    	<specialise-types>
+			<type name="asd:motorVehicle"/>
+			<type name="asd:car"/>
+			<type name="asd:motorcycle"/>
+    	</specialise-types>
+    </config>
+    
+    <config evaluator="string-compare" condition="Advanced Search">
+    	<advanced-search>
+    		<content-types>
+				<type name="asd:motorVehicle"/>
+				<type name="asd:car"/>
+				<type name="asd:motorcycle"/>
+    		</content-types>
+    		<custom-properties>
+            	<meta-data aspect="asd:motorVehicleProperties" property="asd:vehicleManufacturer"/>
+            	<meta-data aspect="asd:motorVehicleProperties" property="asd:vehicleModel"/>
+            	<meta-data aspect="asd:motorVehicleProperties" property="asd:vehicleRegistrationNumber"/>
+			</custom-properties>
+		</advanced-search>
+	</config>
+
+</alfresco-config>
