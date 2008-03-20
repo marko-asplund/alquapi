@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.ixonos.alfresco.search.cm.MappingConfig;
 import com.ixonos.alfresco.search.cm.MappingConfigEntry;
 
 /**
@@ -27,12 +28,13 @@ public class AlfrescoProxyFactory implements ProxyFactory {
 
 	private AlfrescoUserDirectoryProxy userDirectory;
 	private RepositoryDictionary dataDictionary;
+	private ObjectContentMappings objectContentMappings;
 	private AlfrescoRepositoryProxy repository;
 	private static AtomicBoolean initialized = new AtomicBoolean();
 
 	
 	public AlfrescoProxyFactory(URL repositoryAddress, Credentials adminCredentials,
-			Credentials searchCredentials, Map<String, MappingConfigEntry> userBuilderMappingConfig) {
+			Credentials searchCredentials, MappingConfig mappingConfig) {
 		assert(repositoryAddress != null && adminCredentials != null &&
 				searchCredentials != null);
 		if(!initialized.get())
@@ -45,6 +47,7 @@ public class AlfrescoProxyFactory implements ProxyFactory {
 		}
 		this.adminCredentials = new Credentials(adminCredentials);
 		this.searchCredentials = new Credentials(searchCredentials);
+		Map<String, MappingConfigEntry> userBuilderMappingConfig = mappingConfig.getMappings();
 		if(userBuilderMappingConfig == null)
 			userBuilderMappingConfig = Collections.emptyMap();
 		documentBuilderMappingConfig = new HashMap<String, MappingConfigEntry>();
@@ -70,6 +73,15 @@ public class AlfrescoProxyFactory implements ProxyFactory {
 			return dataDictionary;
 		dataDictionary = new AlfrescoDictionaryProxy(repositoryAddress, adminCredentials);
 		return dataDictionary;
+	}
+	
+	public synchronized ObjectContentMappings getObjectContentMapping() {
+		if(objectContentMappings != null && !dataDictionary.isExpired())
+			return objectContentMappings;
+		objectContentMappings = new ObjectContentMappings(
+				getDocumentBuilderMappingConfig(), dataDictionary,
+				userDirectory);
+		return objectContentMappings;
 	}
 	
 	public synchronized AlfrescoRepository getRepositoryProxy() {

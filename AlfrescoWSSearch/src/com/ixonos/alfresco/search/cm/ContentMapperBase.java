@@ -45,7 +45,7 @@ public class ContentMapperBase implements ContentMapper {
 		// save store protocol and store id in content item?
 	}
 
-	public Date parseAlfrescoDate(String date) {
+	public static Date parseAlfrescoDate(String date) {
 		date = date.substring(0, 26) + date.substring(27);
 		final String fmt = "yyyy-MM-dd'T'hh:mm:ss.SSSZ";
 		DateFormat df = new SimpleDateFormat(fmt);

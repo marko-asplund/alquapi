@@ -115,6 +115,14 @@ public class AlfrescoDictionaryProxy implements RepositoryDictionary {
 				logger.fatal("Failed to construct type hierarchy");
 				throw new AlfrescoFaultException("Failed to construct type hierarchy");
 			}
+			
+			// connect sub types with super type
+			for(QName typeName : types.keySet()) {
+				ContentType t = types.get(typeName);
+				if(t.getSuperType() == null)
+					continue;
+				t.getSuperType().addSubType(t);
+			}
 
 		} catch (AuthenticationFault ex) {
 			logger.error("authentication failed", ex);
@@ -151,6 +159,10 @@ public class AlfrescoDictionaryProxy implements RepositoryDictionary {
 	public ContentType getType(QName typeName) {
 		ContentType t = documentTypes.get(typeName);
 		return t;
+	}
+	
+	public ContentType getRootType() {
+		return documentTypes.get(rootTypeName);
 	}
 
 	public Map<QName, ContentType> getTypeMap() {

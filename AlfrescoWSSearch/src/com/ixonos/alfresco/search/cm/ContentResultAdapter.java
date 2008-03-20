@@ -18,10 +18,11 @@ public abstract class ContentResultAdapter {
 	
 	ContentResultAdapter(NamedValue[] props) {
 		properties = new HashMap<String, String>(props.length);
-//		logger.trace("PROPS:");
+		logger.trace("PROPS:");
 		for (NamedValue nv : props) {
 			properties.put(nv.getName(), nv.getValue());
-//			logger.trace("prop: "+nv.getName()+"="+nv.getValue());
+			if(logger.isTraceEnabled())
+				logger.trace("prop: "+nv.getName()+"="+nv.getValue());
 		}
 	}
 	

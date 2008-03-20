@@ -13,4 +13,5 @@ public interface RepositoryDictionary {
 	boolean isExpired();
 	ContentType getType(QName typeName);
 	Map<QName, ContentType> getTypeMap();
+	ContentType getRootType();
 }

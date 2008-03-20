@@ -12,7 +12,9 @@ import org.apache.log4j.Logger;
 
 import com.ixonos.alfresco.search.cm.CMContent;
 import com.ixonos.alfresco.search.cm.CMContentMapper;
+import com.ixonos.alfresco.search.cm.ContentMapper;
 import com.ixonos.alfresco.search.cm.ContentModelConstants;
+import com.ixonos.alfresco.search.cm.MapperGeneratorASM;
 import com.ixonos.alfresco.search.cm.MappingConfigEntry;
 
 /**
@@ -29,24 +31,43 @@ import com.ixonos.alfresco.search.cm.MappingConfigEntry;
 class ObjectContentMappings {
 	private static final Logger logger = Logger.getLogger(ObjectContentMappings.class);
 	private Map<QName, MappingConfigEntry> builderMapping;
+	private MapperGeneratorASM mapperGenerator = new MapperGeneratorASM();
 
-
+	
 	public ObjectContentMappings(Map<String, MappingConfigEntry> userMapping,
 			RepositoryDictionary dictionary, UserDirectory userDirectory) {
-		
+		logger.debug("initializing content mappings");
+
 		// merge user provided mappings with base mappings. user mappings take preference 
 		builderMapping = new HashMap<QName, MappingConfigEntry>(getBaseMappingConfig());
 		for(String typeName : userMapping.keySet())
 			builderMapping.put(QName.valueOf(typeName), userMapping.get(typeName));
+		logger.trace("userMapping keys: "+builderMapping.keySet());
 
 		// add mapping for each type in the data dictionary.
 		Map<QName, ContentType> types = dictionary.getTypeMap();
-		for(QName typeName : types.keySet()) {
-			MappingConfigEntry builder = getMappingForType(typeName, types);
-			builderMapping.put(typeName, builder);
-		}	
+		for(ContentType sub : dictionary.getRootType().getSubTypes())
+			buildMappings(types, sub);
+		if(logger.isTraceEnabled())
+			dumpTypeTree(dictionary.getRootType(), "");
 	}
 	
+	private void dumpTypeTree(ContentType type, String indent) {
+		logger.trace(indent+type.getTypeName().getLocalPart() + " (" +
+				builderMapping.get(type.getTypeName()).getContentBuilder() + ")");
+		for(ContentType sub : type.getSubTypes())
+			dumpTypeTree(sub, indent + "+");
+	}
+	
+	// build mappings bottom-up
+	private void buildMappings(Map<QName, ContentType> types, ContentType type) {
+		MappingConfigEntry builder = getMappingForType(type.getTypeName(), types);
+		builderMapping.put(type.getTypeName(), builder);
+		for(ContentType sub : type.getSubTypes())
+			buildMappings(types, sub);
+	}
+	
+	@SuppressWarnings("unchecked")
 	private MappingConfigEntry getMappingForType(QName typeName, Map<QName, ContentType> types) {
 		MappingConfigEntry mapping = builderMapping.get(typeName); // explicit mapping found
 		StringBuilder path = new StringBuilder(typeName.getLocalPart());
@@ -61,7 +82,20 @@ class ObjectContentMappings {
 			if(mapping == null)
 				throw new AlfrescoFaultException("no builder found for type "+typeName);
 		}
-		logger.trace("builder: "+path.toString());
+		if(mapping.getContentBuilder() == null) {
+			ContentType superType = types.get(typeName).getSuperType();
+			MappingConfigEntry superMapping = builderMapping.get(superType.getTypeName());
+			Class superMapperClass = superMapping.getContentBuilder().getClass();
+			Class mapperClass = mapperGenerator.generateMapper(mapping.getContentType(), superMapperClass);
+			ContentMapper mapper;
+			try {
+				mapper = (ContentMapper)mapperClass.newInstance();
+			} catch (Exception e) {
+				throw new RuntimeException("Failed to create a new instance", e);
+			}
+			mapping = new MappingConfigEntry(mapping.getContentType(), mapper);
+		}
+//		logger.trace("builder: "+path.toString());
 		return mapping;
 	}	
 

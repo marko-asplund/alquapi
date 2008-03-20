@@ -20,4 +20,5 @@ public interface ProxyFactory {
 	Credentials getAdminCredentials();
 	Credentials getSearchCredentials();
 	Map<String, MappingConfigEntry> getDocumentBuilderMappingConfig();
+	ObjectContentMappings getObjectContentMapping();
 }

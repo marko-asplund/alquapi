@@ -1,4 +1,4 @@
-package com.ixonos.alfresco.search.demo;
+package com.ixonos.alfresco.search.demo2;
 
 import java.net.URL;
 import java.util.List;
@@ -11,7 +11,7 @@ import com.ixonos.alfresco.search.Credentials;
 import com.ixonos.alfresco.search.ProxyFactory;
 import com.ixonos.alfresco.search.cm.Content;
 import com.ixonos.alfresco.search.cm.MappingConfig;
-import com.ixonos.alfresco.search.cm.MappingConfigEntry;
+import com.ixonos.alfresco.search.demo.MotorVehicleSearchCriteria;
 
 
 /**
@@ -31,10 +31,8 @@ public class VehicleSearcher {
 
     	// configure custom content mapping
     	MappingConfig config = new MappingConfig();
-    	config.addMapping(MotorVehicleConstants.TYPE_VEHICLE.toString(),
-    			new MappingConfigEntry(new MotorVehicle(), new MotorVehicleMapper()));
-    	config.addMapping(MotorVehicleConstants.TYPE_CAR.toString(),
-    			new MappingConfigEntry(new Car(), new CarMapper()));
+    	config.addMapping(new MotorVehicle());
+    	config.addMapping(new Car());
 
     	factory = new AlfrescoProxyFactory(repositoryUrl, adminCredentials,
     			searchCredentials, config);
@@ -52,11 +50,11 @@ public class VehicleSearcher {
     		StringBuilder sb = new StringBuilder();
     		if(d instanceof MotorVehicle) {
     			MotorVehicle mv = (MotorVehicle)d;
-    			sb.append("vehicle: "+mv.getRegistration());
+    			sb.append("vehicle: "+mv.getRegistration()+","+mv.getManufacturer()+","+mv.getModel());
     		}
     		if(d instanceof Car) {
     			Car md = (Car)d;
-    			sb.append(", doors: "+md.getDoors());
+    			sb.append(", doors: "+md.getDoors()+","+md.getId());
     		}
     		if(sb.length()>0)
     			logger.info(sb.toString());

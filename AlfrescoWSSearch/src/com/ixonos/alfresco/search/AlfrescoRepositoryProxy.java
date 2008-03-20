@@ -48,9 +48,7 @@ public class AlfrescoRepositoryProxy implements AlfrescoRepository {
 
 		UserDirectory userDirectory = factory.getUserDirectoryProxy();
 		RepositoryDictionary dictionary = factory.getDictionaryProxy();
-		ObjectContentMappings documentBuilderMapping = new ObjectContentMappings(
-				factory.getDocumentBuilderMappingConfig(),
-				dictionary, userDirectory);
+		ObjectContentMappings documentBuilderMapping = factory.getObjectContentMapping();
 
 		try {
 			// - authentication sessions are per-thread so ending a session in one thread only affects

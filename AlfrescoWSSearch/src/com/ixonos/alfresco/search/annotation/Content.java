@@ -7,4 +7,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Content {
 	String qName();
+	boolean useParentMapper() default false;
 }

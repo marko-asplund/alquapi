@@ -1,5 +1,8 @@
 package com.ixonos.alfresco.search;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.namespace.QName;
 
 /**
@@ -12,6 +15,7 @@ public class ContentType {
 	private String title;
 	private QName superTypeName;
 	private ContentType superType;
+	private List<ContentType> subTypes = new ArrayList<ContentType>();
 
 	public ContentType(QName typeName, String title, QName superTypeName) {
 		this.typeName = typeName;
@@ -58,6 +62,14 @@ public class ContentType {
 		if (!(o2 instanceof ContentType))
 			return false;
 		return typeName.equals(((ContentType) o2).typeName);
+	}
+	
+	void addSubType(ContentType subType) {
+		subTypes.add(subType);
+	}
+	
+	List<ContentType> getSubTypes() {
+		return subTypes;
 	}
 
 	@Override

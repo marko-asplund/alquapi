@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/alfresco-web-service-client.jar"/>
+	<classpathentry kind="lib" path="lib/alfresco-web-service-client.jar" sourcepath="/home/aspa/Documents/markoa/projects/alfresco-ws/alfresco-community-sdk-2.1.0/src/packages/web-service-client-src.zip"/>
 	<classpathentry kind="lib" path="lib/log4j.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
 	<classpathentry kind="lib" path="lib/axis.jar"/>
@@ -17,5 +17,10 @@
 	<classpathentry kind="lib" path="lib/opensaml-1.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/bcprov-jdk15-129.jar"/>
 	<classpathentry kind="lib" path="lib/mail.jar"/>
+	<classpathentry kind="lib" path="lib/asm-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/asm-commons-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/dev/asm-analysis-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/dev/asm-tree-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/dev/asm-util-3.1.jar"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>
