@@ -9,7 +9,12 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.commons.Method;
 
-
+/**
+ * Generates bytecode for calling content model object setter for an annotated field
+ * in automatically generated mapper class.
+ * 
+ * @author Marko Asplund
+ */
 class PropertySetCallGenerator {
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(PropertySetCallGenerator.class);

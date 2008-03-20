@@ -4,7 +4,11 @@ import java.lang.reflect.Field;
 
 import org.objectweb.asm.commons.GeneratorAdapter;
 
-
+/**
+ * Combines parameters required in generating setter call bytecode in PropertySetCallGenerator.
+ * 
+ * @author Marko Asplund
+ */
 @SuppressWarnings({"unused", "unchecked"})
 class SetterGenerationContext {
 	GeneratorAdapter generator;

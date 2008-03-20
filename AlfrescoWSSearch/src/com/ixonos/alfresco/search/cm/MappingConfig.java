@@ -5,7 +5,11 @@ import java.util.Map;
 
 import com.ixonos.alfresco.search.annotation.AnnotationUtils;
 
-
+/**
+ * Encapsulate user defined content mapping configuration.
+ * 
+ * @author Marko Asplund
+ */
 public class MappingConfig {
 	private Map<String, MappingConfigEntry> userMapping = new HashMap<String, MappingConfigEntry>();
 	

@@ -24,7 +24,11 @@ import com.ixonos.alfresco.search.annotation.AnnotationUtils;
 import com.ixonos.alfresco.search.annotation.Property;
 
 
-
+/**
+ * Generates content mapper implementation class based on an annotated content model class.
+ * 
+ * @author Marko Asplund
+ */
 public class MapperGeneratorASM {
 	private static final Logger logger = Logger.getLogger(MapperGeneratorASM.class);
 	private static final int VAR_INDEX_CONTENT_OBJECT = 0;
