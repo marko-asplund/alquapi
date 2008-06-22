@@ -1,0 +1,27 @@
+
+Alfresco SDK 2.1 (community)
+----------------------------
+- alfresco-web-service-client.jar
+- axis.jar
+- jaxrpc.jar
+- commons-logging.jar
+- commons-discovery-0.2.jar
+- wsdl4j.jar
+- activation.jar
+- wss4j.jar
+- xmlsec-1.4.0.jar
+- opensaml-1.0.1.jar
+- bcprov-jdk15-129.jar
+- mail.jar
+
+log4j 1.2.14
+------------
+- log4j.jar
+
+ASM 3.1
+-------
+- asm-3.1.jar
+- asm-commons-3.1.jar
+- asm-analysis-3.1.jar
+- asm-tree-3.1.jar
+- asm-util-3.1.jar
